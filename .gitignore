@@ -1,0 +1,26 @@
+# Ambiente virtuale
+venv/
+.venv/
+
+# Cache e compilati Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Config e metadati
+*.log
+*.sqlite3
+*.db
+
+# File di sistema
+.DS_Store
+Thumbs.db
+
+# Configurazione Streamlit
+.streamlit/*.toml
+
+# Altri file temporanei
+*.bak
+*.swp
+*.tmp
