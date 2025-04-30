@@ -24,6 +24,11 @@
 
 ---
 
+
+Tutti i diritti riservati © 2025 — Andrea Barilà per IDRA Srl.
+
+---
+
 ## 🔧 Setup locale
 
 1. **Clona il repository**
@@ -53,5 +58,4 @@ streamlit run nome_del_file.py
 
 
 
-Tutti i diritti riservati © 2025 — Andrea Barilà per IDRA Srl.
 
