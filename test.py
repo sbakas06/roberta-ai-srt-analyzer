@@ -48,7 +48,7 @@ tokenizer = tiktoken.get_encoding("cl100k_base")
 def count_tokens(text):
     return len(tokenizer.encode(text))
 
-def split_srt_into_chunks(srt_text, max_tokens=2000):
+def split_srt_into_chunks(srt_text, max_tokens):
     blocks = [b for b in srt_text.strip().split("\n\n") if len(b.strip().splitlines()) >= 3 and len(b.strip()) > 10]
     chunks, current_chunk, current_token_count = [], [], 0
     for block in blocks:
@@ -79,7 +79,8 @@ def generate_response_from_chunk(chunk, retries=1):
             messages=messages,
             temperature=0.2,
             top_p=1.0,
-            max_tokens=1500
+            max_tokens=st.session_state.get("max_tokens", 1500)
+
         )
         return response.choices[0].message.content
     except Exception as e:
@@ -108,7 +109,8 @@ with st.sidebar:
         st.session_state.delete_index = None
         st.session_state.active_chat_index = None
         st.rerun()
-    max_tokens = st.slider('Max Tokens per blocco', 256, 4096, 1500, 128)
+    st.session_state["max_tokens"] = st.slider('Max Tokens per blocco', 256, 4096, 1500, 128)
+
 
 uploaded_file = st.file_uploader("📁 Carica file .srt da analizzare (uno per volta)", type=["srt"])
 
@@ -122,7 +124,7 @@ elif uploaded_file is not None:
     file_name = uploaded_file.name
     file_content = uploaded_file.read().decode('utf-8')
     with st.spinner("Analisi in corso..."):
-        chunks = split_srt_into_chunks(file_content, max_tokens=2000)
+        chunks = split_srt_into_chunks(file_content, st.session_state["max_tokens"])
         all_responses = []
         progress = st.progress(0)
         for i, chunk in enumerate(chunks):
