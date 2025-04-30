@@ -10,7 +10,7 @@ st.markdown("# 🤖 Roberta AI")
 st.markdown("**by Andrea Barilà per IDRA srl**")
 
 with st.sidebar:
-    api_key = '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'
+    api_key = st.secrets["OPENAI_API_KEY"]
     if api_key:
         client = OpenAI(api_key=api_key)
     else:
